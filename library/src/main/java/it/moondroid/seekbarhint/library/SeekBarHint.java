@@ -149,7 +149,7 @@ public class SeekBarHint extends SeekBar implements SeekBar.OnSeekBarChangeListe
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-        if(mExternalListener !=null){
+        if(mExternalListener !=null) {
             mExternalListener.onStopTrackingTouch(seekBar);
         }
 
@@ -160,12 +160,14 @@ public class SeekBarHint extends SeekBar implements SeekBar.OnSeekBarChangeListe
     private float getXPosition(SeekBar seekBar){
         float val = (((float)seekBar.getProgress() * (float)(seekBar.getWidth() - 2 * seekBar.getThumbOffset())) / seekBar.getMax());
         float offset = seekBar.getThumbOffset();
+        int textWidth = 0;
 
-        ((View)mPopupTextView.getParent()).measure(0, 0);
+        if (mPopupTextView != null && mPopupTextView.getParent() != null) {
+            ((View) mPopupTextView.getParent()).measure(0, 0);
+            textWidth = ((View) mPopupTextView.getParent()).getMeasuredWidth();
+        }
 
-        int textWidth = ((View)mPopupTextView.getParent()).getMeasuredWidth();
         float textCenter = (textWidth/2.0f);
-
         float newX = val+offset - textCenter;
 
         return newX;
